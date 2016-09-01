@@ -1,0 +1,32 @@
+<!doctype HTML>
+<meta charset="utf-8">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.js"></script>
+<script>
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+};
+
+var token = getParameterByName('token');
+var headers = new Headers();
+headers.append('Authorization', 'Bearer ' + token);
+fetch('http://localhost:8080/restricted', {
+    headers: headers
+}).then(function(response) {
+    if (response.status < 200 || response.status >= 300) {
+        console.error(response);
+        return;
+    }
+    return response.text();
+}).then(function(text) {
+    console.log(text);
+});
+</script>
+
+
