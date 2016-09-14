@@ -48,7 +48,7 @@ app.get('/auth/google/callback',
   function(req, res) {
     fs.readFile('public/logged-in.html', function(err, html) {
         html = html.toString();
-        html = html.replace('{script}', '<script>var AUTH_TOKEN="' + req.user.accessToken + '"; history.replaceState(null, null, "/logged-in.html");</script>');
+        html = html.replace('<!--{script}-->', '<script>var AUTH_TOKEN="' + req.user.accessToken + '"; history.replaceState(null, null, "/logged-in.html");</script>');
         res.send(html);
     });
 });
